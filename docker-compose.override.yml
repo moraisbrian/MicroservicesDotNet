@@ -34,7 +34,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin123
     restart: always
     ports:
-      - "5050:80"
+      - "5050:5050"
     volumes:
       - pgadmin_data:/root/.pgadmin
 
@@ -43,28 +43,38 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+      - ASPNETCORE_URLS=http://*:8000
     depends_on:
       - catalogdb
     ports:
-      - "8000:80"
+      - "8000:8000"
 
   basket.api:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CacheSettings:ConnectionString=basketdb:6379"
+      - ASPNETCORE_URLS=http://*:8001
     depends_on:
       - basketdb
     ports:
-      - "8001:80"
+      - "8001:8001"
 
   disconunt.api:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin123;"
+      - ASPNETCORE_URLS=http://*:8002
     depends_on:
       - discountdb
     ports:
-      - "8002:80"
+      - "8002:8002"
 
+  apigateway:
+    container_name: gateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:8003
+    ports:
+      - "8003:8003"
