@@ -60,7 +60,7 @@ services:
     ports:
       - "8001:8001"
 
-  disconunt.api:
+  discount.api:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

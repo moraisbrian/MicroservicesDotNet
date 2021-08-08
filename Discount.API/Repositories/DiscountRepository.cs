@@ -1,11 +1,11 @@
 ﻿using Dapper;
-using Disconunt.API.Entities;
+using Discount.API.Entities;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System;
 using System.Threading.Tasks;
 
-namespace Disconunt.API.Repositories
+namespace Discount.API.Repositories
 {
     public class DiscountRepository : IDiscountRepository
     {

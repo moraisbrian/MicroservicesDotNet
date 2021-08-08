@@ -1,9 +1,9 @@
-﻿using Disconunt.API.Entities;
-using Disconunt.API.Repositories;
+﻿using Discount.API.Entities;
+using Discount.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Disconunt.API.Controllers
+namespace Discount.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]

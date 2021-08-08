@@ -25,11 +25,11 @@ services:
       context: .
       dockerfile: Basket.API/Dockerfile
 
-  disconunt.api:
-    image: ${DOCKER_REGISTRY-}disconuntapi
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
     build:
       context: .
-      dockerfile: Disconunt.API/Dockerfile
+      dockerfile: Discount.API/Dockerfile
 
   apigateway:
     image: ${DOCKER_REGISTRY-}apigateway
