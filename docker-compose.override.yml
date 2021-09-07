@@ -30,14 +30,13 @@ services:
   authdb:
     container_name: authdb
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin123
-      - POSTGRES_DB=AuthService
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password1
     restart: always
     ports:
-      - "5431:5432"
+      - "1433:1433"
     volumes:
-      - auth_data:/var/lib/postgresql/data/
+      - mssql_data:/var/opt/mssql
 
   pgadmin:
     container_name: pgadmin
@@ -56,7 +55,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
       - ASPNETCORE_URLS=http://*:8000
-      - AuthSettings:AuthUrl=http://auth.api:8004
+      - AuthSettings:IdentityUrl=auth.api
     depends_on:
       - catalogdb
     ports:
@@ -68,7 +67,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CacheSettings:ConnectionString=basketdb:6379"
       - ASPNETCORE_URLS=http://*:8001
-      - AuthSettings:AuthUrl=http://auth.api:8004
+      - AuthSettings:IdentityUrl=auth.api
     depends_on:
       - basketdb
     ports:
@@ -80,7 +79,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin123;"
       - ASPNETCORE_URLS=http://*:8002
-      - AuthSettings:AuthUrl=http://auth.api:8004
+      - AuthSettings:IdentityUrl=auth.api
     depends_on:
       - discountdb
     ports:
@@ -90,9 +89,9 @@ services:
     container_name: auth.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=authdb;Port=5431;Database=AuthService;User Id=admin;Password=admin123;"
+      - "ConnectionStrings:DefaultConnection=Data Source=authdb;Initial Catalog=AuthService;User Id=sa;Password=Password1;"
       - ASPNETCORE_URLS=http://*:8004
-      - AuthSettings:AuthUrl=http://auth.api:8004
+      - AuthSettings:IdentityUrl=auth.api
     depends_on:
       - authdb
     ports:
@@ -103,6 +102,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:8003
-      - AuthSettings:AuthUrl=http://auth.api:8004
+      - AuthSettings:IdentityUrl=auth.api
     ports:
       - "8003:8003"
