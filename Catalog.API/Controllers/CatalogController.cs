@@ -1,5 +1,6 @@
 ﻿using Catalog.API.Entities;
 using Catalog.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Catalog.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class CatalogController : ControllerBase
     {
         private readonly IProductRepository _repository;

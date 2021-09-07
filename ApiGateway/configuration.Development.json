@@ -1,6 +1,18 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/v1/auth",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "auth.api",
+          "Port": 8004
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/v1/catalog",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -10,7 +22,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/catalog",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/catalog/{id}",
@@ -22,7 +38,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/catalog/{id}",
-      "UpstreamHttpMethod": [ "Get", "Delete" ]
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/catalog/GetProductsByCategory/{category}",
@@ -33,8 +53,12 @@
           "Port": 8000
         }
       ],
-      "UpstreamPathTemplate": "/api/catalog/category/{category}",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/api/catalog/GetProductsByCategory/{category}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/basket/{userName}",
@@ -46,7 +70,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/basket/{userName}",
-      "UpstreamHttpMethod": [ "Get", "Delete" ]
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/basket",
@@ -58,7 +86,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/basket",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/discount/{productName}",
@@ -70,7 +102,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/discount/{productName}",
-      "UpstreamHttpMethod": [ "Get", "Delete" ]
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/discount",
@@ -82,7 +118,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/discount",
-      "UpstreamHttpMethod": [ "Post", "Put" ]
+      "UpstreamHttpMethod": [ "Post", "Put" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     }
   ],
   "GlobalConfiguration": {

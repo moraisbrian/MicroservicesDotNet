@@ -21,6 +21,21 @@ namespace ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOcelot(Configuration);
+
+            var authUrl = Configuration["AuthSettings:IdentityUrl"];
+            var authKey = Configuration["AuthSettings:IdentityApiKey"];
+            var validAudiences = Configuration["AuthSettings:ValidAudiences"].Split(';');
+
+            services.AddAuthentication()
+                .AddJwtBearer(authKey, options =>
+                {
+                    options.Authority = authUrl;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidAudiences = validAudiences
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +47,8 @@ namespace ApiGateway
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

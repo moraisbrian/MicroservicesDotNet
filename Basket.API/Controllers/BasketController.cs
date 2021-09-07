@@ -1,5 +1,6 @@
 ﻿using Basket.API.Entities;
 using Basket.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace Basket.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _repository;

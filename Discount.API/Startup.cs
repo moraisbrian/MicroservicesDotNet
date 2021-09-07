@@ -1,4 +1,5 @@
 using Discount.API.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,20 @@ namespace Discount.API
             });
 
             services.AddScoped<IDiscountRepository, DiscountRepository>();
+
+            var authUrl = Configuration["AuthSettings:IdentityUrl"];
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = authUrl;
+                options.RequireHttpsMetadata = false;
+                options.Audience = "discount.api";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +55,8 @@ namespace Discount.API
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -1,5 +1,6 @@
 using Catalog.API.Data;
 using Catalog.API.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,20 @@ namespace Catalog.API
 
             services.AddScoped<ICatalogContext, CatalogContext>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            var authUrl = Configuration["AuthSettings:IdentityUrl"];
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = authUrl;
+                options.RequireHttpsMetadata = false;
+                options.Audience = "catalog.api";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +57,8 @@ namespace Catalog.API
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
